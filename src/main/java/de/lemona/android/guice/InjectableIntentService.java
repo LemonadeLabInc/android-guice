@@ -6,10 +6,13 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 
 public abstract class InjectableIntentService extends IntentService {
+
+    static { Injection.init(); }
+
     /**
      * {@inheritDoc}
      */
-    public InjectableIntentService(String name) {
+    protected InjectableIntentService(String name) {
         super(name);
     }
 
