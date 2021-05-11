@@ -10,6 +10,7 @@ def versionFromProperties() {
 pipeline {
     agent any
     environment {
+        API_LEVEL = 'all'
         BUILD_ID = leomoSetupBuildId()
         S3_ACCESS_KEY = credentials('leomo-library-s3-access-key')
         S3_SECRET_KEY = credentials('leomo-library-s3-secret-key')
@@ -28,11 +29,11 @@ pipeline {
                 }
             }
             steps {
-                leomoAndroidBuild {
+                leomoAndroidBuild(apiLevel: env.API_LEVEL,  {
                     sh "./gradlew -PbuildNumber=${env.BUILD_ID} clean publish uploadS3 -x javadocRelease -Ps3.accessKey=${env.S3_ACCESS_KEY} -Ps3.secretKey=${env.S3_SECRET_KEY}"
                 }
                 leomoTag "${env.VERSION}.${env.BUILD_ID}", "Jenkins Build ${env.BUILD_DISPLAY_NAME}\nSee ${env.BUILD_URL}"
-            }
+            })
         }
     }
     post {
