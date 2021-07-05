@@ -1,25 +1,22 @@
 package de.lemona.android.guice.test;
 
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
-import junit.framework.Assert;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
-public class InjectableActivityTest extends ActivityUnitTestCase<TestInjectableActivity> {
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
 
-    public InjectableActivityTest() {
-        super(TestInjectableActivity.class);
-    }
+public class InjectableActivityTest {
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        startActivity(new Intent(getInstrumentation().getTargetContext(), TestActivity.class), null, null);
-    }
+    @Rule
+    public ActivityScenarioRule<TestInjectableActivity> activityScenarioRule = new ActivityScenarioRule<>(TestInjectableActivity.class);
 
+    @Test
     public void testInjectee() {
-        final TestInjectableActivity activity = getActivity();
-        Assert.assertNotNull("Null activity in test", activity);
-        activity.validate();
+        activityScenarioRule.getScenario().onActivity(activity -> {
+            Assert.assertNotNull("Null activity in test", activity);
+            activity.validate();
+        });
     }
 
 }

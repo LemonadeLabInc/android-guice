@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="de.lemona.android.guice.test">
-
+    package="de.lemona.android.guice.test">
     <application>
-      <activity android:name=".AnnotatedTestActivity"/>
+        <activity android:name=".TestActivity"/>
+        <activity android:name=".TestInjectableActivity"/>
+        <activity android:name=".AnnotatedTestActivity"/>
+        <service android:name=".TestService"/>
+        <service android:name=".TestInjectableService"/>
     </application>
 
 </manifest>

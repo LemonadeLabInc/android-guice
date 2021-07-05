@@ -1,8 +1,5 @@
 package de.lemona.android.guice.test;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.DownloadManager;
@@ -24,17 +21,29 @@ import android.os.Vibrator;
 import android.os.storage.StorageManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
-import android.test.AndroidTestCase;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import de.lemona.android.guice.Injection;
-import junit.framework.Assert;
 
-public class SystemModuleTest extends AndroidTestCase {
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
+@RunWith(AndroidJUnit4.class)
+public class SystemModuleTest {
+
+    @Test
     public void testNotNullInjection() {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Injection.createInjector(context);
@@ -64,39 +73,41 @@ public class SystemModuleTest extends AndroidTestCase {
         Assert.assertNotNull("Null WindowManager instance", injector.getInstance(WindowManager.class));
     }
 
+    @Test
     public void testInjectionInstances() {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Injection.createInjector(context);
 
-        Assert.assertSame("Wrong ActivityManager instance",     context.getSystemService(Context.ACTIVITY_SERVICE),               injector.getInstance(ActivityManager.class));
-        Assert.assertSame("Wrong AlarmManager instance",        context.getSystemService(Context.ALARM_SERVICE),                  injector.getInstance(AlarmManager.class));
-        Assert.assertSame("Wrong AudioManager instance",        context.getSystemService(Context.AUDIO_SERVICE),                  injector.getInstance(AudioManager.class));
-        Assert.assertSame("Wrong BatteryManager instance",      context.getSystemService(Context.BATTERY_SERVICE),                injector.getInstance(BatteryManager.class));
-        Assert.assertSame("Wrong ConnectivityManager instance", context.getSystemService(Context.CONNECTIVITY_SERVICE),           injector.getInstance(ConnectivityManager.class));
-        Assert.assertSame("Wrong DownloadManager instance",     context.getSystemService(Context.DOWNLOAD_SERVICE),               injector.getInstance(DownloadManager.class));
-        Assert.assertSame("Wrong InputMethodManager instance",  context.getSystemService(Context.INPUT_METHOD_SERVICE),           injector.getInstance(InputMethodManager.class));
-        Assert.assertSame("Wrong JobScheduler instance",        context.getSystemService(Context.JOB_SCHEDULER_SERVICE),          injector.getInstance(JobScheduler.class));
+        Assert.assertSame("Wrong ActivityManager instance", context.getSystemService(Context.ACTIVITY_SERVICE), injector.getInstance(ActivityManager.class));
+        Assert.assertSame("Wrong AlarmManager instance", context.getSystemService(Context.ALARM_SERVICE), injector.getInstance(AlarmManager.class));
+        Assert.assertSame("Wrong AudioManager instance", context.getSystemService(Context.AUDIO_SERVICE), injector.getInstance(AudioManager.class));
+        Assert.assertSame("Wrong BatteryManager instance", context.getSystemService(Context.BATTERY_SERVICE), injector.getInstance(BatteryManager.class));
+        Assert.assertSame("Wrong ConnectivityManager instance", context.getSystemService(Context.CONNECTIVITY_SERVICE), injector.getInstance(ConnectivityManager.class));
+        Assert.assertSame("Wrong DownloadManager instance", context.getSystemService(Context.DOWNLOAD_SERVICE), injector.getInstance(DownloadManager.class));
+        Assert.assertSame("Wrong InputMethodManager instance", context.getSystemService(Context.INPUT_METHOD_SERVICE), injector.getInstance(InputMethodManager.class));
+        Assert.assertSame("Wrong JobScheduler instance", context.getSystemService(Context.JOB_SCHEDULER_SERVICE), injector.getInstance(JobScheduler.class));
         //Assert.assertSame("Wrong KeyguardManager instance",     context.getSystemService(Context.KEYGUARD_SERVICE),               injector.getInstance(KeyguardManager.class));
-        Assert.assertSame("Wrong LayoutInflater instance",      context.getSystemService(Context.LAYOUT_INFLATER_SERVICE),        injector.getInstance(LayoutInflater.class));
-        Assert.assertSame("Wrong LocationManager instance",     context.getSystemService(Context.LOCATION_SERVICE),               injector.getInstance(LocationManager.class));
-        Assert.assertSame("Wrong MediaRouter instance",         context.getSystemService(Context.MEDIA_ROUTER_SERVICE),           injector.getInstance(MediaRouter.class));
-        Assert.assertSame("Wrong NotificationManager instance", context.getSystemService(Context.NOTIFICATION_SERVICE),           injector.getInstance(NotificationManager.class));
-        Assert.assertSame("Wrong PowerManager instance",        context.getSystemService(Context.POWER_SERVICE),                  injector.getInstance(PowerManager.class));
-        Assert.assertSame("Wrong SearchManager instance",       context.getSystemService(Context.SEARCH_SERVICE),                 injector.getInstance(SearchManager.class));
-        Assert.assertSame("Wrong SensorManager instance",       context.getSystemService(Context.SENSOR_SERVICE),                 injector.getInstance(SensorManager.class));
-        Assert.assertSame("Wrong StorageManager instance",      context.getSystemService(Context.STORAGE_SERVICE),                injector.getInstance(StorageManager.class));
+        Assert.assertSame("Wrong LayoutInflater instance", context.getSystemService(Context.LAYOUT_INFLATER_SERVICE), injector.getInstance(LayoutInflater.class));
+        Assert.assertSame("Wrong LocationManager instance", context.getSystemService(Context.LOCATION_SERVICE), injector.getInstance(LocationManager.class));
+        Assert.assertSame("Wrong MediaRouter instance", context.getSystemService(Context.MEDIA_ROUTER_SERVICE), injector.getInstance(MediaRouter.class));
+        Assert.assertSame("Wrong NotificationManager instance", context.getSystemService(Context.NOTIFICATION_SERVICE), injector.getInstance(NotificationManager.class));
+        Assert.assertSame("Wrong PowerManager instance", context.getSystemService(Context.POWER_SERVICE), injector.getInstance(PowerManager.class));
+        Assert.assertSame("Wrong SearchManager instance", context.getSystemService(Context.SEARCH_SERVICE), injector.getInstance(SearchManager.class));
+        Assert.assertSame("Wrong SensorManager instance", context.getSystemService(Context.SENSOR_SERVICE), injector.getInstance(SensorManager.class));
+        Assert.assertSame("Wrong StorageManager instance", context.getSystemService(Context.STORAGE_SERVICE), injector.getInstance(StorageManager.class));
         Assert.assertSame("Wrong SubscriptionManager instance", context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE), injector.getInstance(SubscriptionManager.class));
-        Assert.assertSame("Wrong TelephonyManager instance",    context.getSystemService(Context.TELEPHONY_SERVICE),              injector.getInstance(TelephonyManager.class));
-        Assert.assertSame("Wrong UiModeManager instance",       context.getSystemService(Context.UI_MODE_SERVICE),                injector.getInstance(UiModeManager.class));
-        Assert.assertSame("Wrong Vibrator instance",            context.getSystemService(Context.VIBRATOR_SERVICE),               injector.getInstance(Vibrator.class));
-        Assert.assertSame("Wrong WifiManager instance",         context.getSystemService(Context.WIFI_SERVICE),                   injector.getInstance(WifiManager.class));
+        Assert.assertSame("Wrong TelephonyManager instance", context.getSystemService(Context.TELEPHONY_SERVICE), injector.getInstance(TelephonyManager.class));
+        Assert.assertSame("Wrong UiModeManager instance", context.getSystemService(Context.UI_MODE_SERVICE), injector.getInstance(UiModeManager.class));
+        Assert.assertSame("Wrong Vibrator instance", context.getSystemService(Context.VIBRATOR_SERVICE), injector.getInstance(Vibrator.class));
+        Assert.assertSame("Wrong WifiManager instance", context.getSystemService(Context.WIFI_SERVICE), injector.getInstance(WifiManager.class));
         //Assert.assertSame("Wrong WindowManager instance",       context.getSystemService(Context.WINDOW_SERVICE),                 injector.getInstance(WindowManager.class));
     }
 
+    @Test
     public void testInjectee() {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Injection.createInjector(context);
@@ -104,8 +115,9 @@ public class SystemModuleTest extends AndroidTestCase {
         injector.getInstance(SystemServicesInjectee.class).validate(context);
     }
 
+    @Test
     public void testInjection() {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
 
         Injection.createInjector(context).getInstance(SystemServicesInjectee.class).validate(context);
@@ -115,29 +127,52 @@ public class SystemModuleTest extends AndroidTestCase {
 
     public static class SystemServicesInjectee {
 
-        @Inject private ActivityManager activityManager;
-        @Inject private AlarmManager alarmManager;
-        @Inject private AudioManager audioManager;
-        @Inject private BatteryManager batteryManager;
-        @Inject private ConnectivityManager connectivityManager;
-        @Inject private DownloadManager downloadManager;
-        @Inject private InputMethodManager inputMethodManager;
-        @Inject private JobScheduler jobScheduler;
-        @Inject private KeyguardManager keyguardManager;
-        @Inject private LayoutInflater layoutInflater;
-        @Inject private LocationManager locationManager;
-        @Inject private MediaRouter mediaRouter;
-        @Inject private NotificationManager notificationManager;
-        @Inject private PowerManager powerManager;
-        @Inject private SearchManager searchManager;
-        @Inject private SensorManager sensorManager;
-        @Inject private StorageManager storageManager;
-        @Inject private SubscriptionManager subscriptionManager;
-        @Inject private TelephonyManager telephonyManager;
-        @Inject private UiModeManager uiModeManager;
-        @Inject private Vibrator vibrator;
-        @Inject private WifiManager wifiManager;
-        @Inject private WindowManager windowManager;
+        @Inject
+        private ActivityManager activityManager;
+        @Inject
+        private AlarmManager alarmManager;
+        @Inject
+        private AudioManager audioManager;
+        @Inject
+        private BatteryManager batteryManager;
+        @Inject
+        private ConnectivityManager connectivityManager;
+        @Inject
+        private DownloadManager downloadManager;
+        @Inject
+        private InputMethodManager inputMethodManager;
+        @Inject
+        private JobScheduler jobScheduler;
+        @Inject
+        private KeyguardManager keyguardManager;
+        @Inject
+        private LayoutInflater layoutInflater;
+        @Inject
+        private LocationManager locationManager;
+        @Inject
+        private MediaRouter mediaRouter;
+        @Inject
+        private NotificationManager notificationManager;
+        @Inject
+        private PowerManager powerManager;
+        @Inject
+        private SearchManager searchManager;
+        @Inject
+        private SensorManager sensorManager;
+        @Inject
+        private StorageManager storageManager;
+        @Inject
+        private SubscriptionManager subscriptionManager;
+        @Inject
+        private TelephonyManager telephonyManager;
+        @Inject
+        private UiModeManager uiModeManager;
+        @Inject
+        private Vibrator vibrator;
+        @Inject
+        private WifiManager wifiManager;
+        @Inject
+        private WindowManager windowManager;
 
         public void validate(Context context) {
             Assert.assertNotNull("Null ActivityManager instance", this.activityManager);
@@ -164,28 +199,28 @@ public class SystemModuleTest extends AndroidTestCase {
             Assert.assertNotNull("Null WifiManager instance", this.wifiManager);
             Assert.assertNotNull("Null WindowManager instance", this.windowManager);
 
-            Assert.assertSame("Wrong ActivityManager instance",     context.getSystemService(Context.ACTIVITY_SERVICE),               this.activityManager);
-            Assert.assertSame("Wrong AlarmManager instance",        context.getSystemService(Context.ALARM_SERVICE),                  this.alarmManager);
-            Assert.assertSame("Wrong AudioManager instance",        context.getSystemService(Context.AUDIO_SERVICE),                  this.audioManager);
-            Assert.assertSame("Wrong BatteryManager instance",      context.getSystemService(Context.BATTERY_SERVICE),                this.batteryManager);
-            Assert.assertSame("Wrong ConnectivityManager instance", context.getSystemService(Context.CONNECTIVITY_SERVICE),           this.connectivityManager);
-            Assert.assertSame("Wrong DownloadManager instance",     context.getSystemService(Context.DOWNLOAD_SERVICE),               this.downloadManager);
-            Assert.assertSame("Wrong InputMethodManager instance",  context.getSystemService(Context.INPUT_METHOD_SERVICE),           this.inputMethodManager);
-            Assert.assertSame("Wrong JobScheduler instance",        context.getSystemService(Context.JOB_SCHEDULER_SERVICE),          this.jobScheduler);
+            Assert.assertSame("Wrong ActivityManager instance", context.getSystemService(Context.ACTIVITY_SERVICE), this.activityManager);
+            Assert.assertSame("Wrong AlarmManager instance", context.getSystemService(Context.ALARM_SERVICE), this.alarmManager);
+            Assert.assertSame("Wrong AudioManager instance", context.getSystemService(Context.AUDIO_SERVICE), this.audioManager);
+            Assert.assertSame("Wrong BatteryManager instance", context.getSystemService(Context.BATTERY_SERVICE), this.batteryManager);
+            Assert.assertSame("Wrong ConnectivityManager instance", context.getSystemService(Context.CONNECTIVITY_SERVICE), this.connectivityManager);
+            Assert.assertSame("Wrong DownloadManager instance", context.getSystemService(Context.DOWNLOAD_SERVICE), this.downloadManager);
+            Assert.assertSame("Wrong InputMethodManager instance", context.getSystemService(Context.INPUT_METHOD_SERVICE), this.inputMethodManager);
+            Assert.assertSame("Wrong JobScheduler instance", context.getSystemService(Context.JOB_SCHEDULER_SERVICE), this.jobScheduler);
             //Assert.assertSame("Wrong KeyguardManager instance",     context.getSystemService(Context.KEYGUARD_SERVICE),               this.keyguardManager);
-            Assert.assertSame("Wrong LayoutInflater instance",      context.getSystemService(Context.LAYOUT_INFLATER_SERVICE),        this.layoutInflater);
-            Assert.assertSame("Wrong LocationManager instance",     context.getSystemService(Context.LOCATION_SERVICE),               this.locationManager);
-            Assert.assertSame("Wrong MediaRouter instance",         context.getSystemService(Context.MEDIA_ROUTER_SERVICE),           this.mediaRouter);
-            Assert.assertSame("Wrong NotificationManager instance", context.getSystemService(Context.NOTIFICATION_SERVICE),           this.notificationManager);
-            Assert.assertSame("Wrong PowerManager instance",        context.getSystemService(Context.POWER_SERVICE),                  this.powerManager);
-            Assert.assertSame("Wrong SearchManager instance",       context.getSystemService(Context.SEARCH_SERVICE),                 this.searchManager);
-            Assert.assertSame("Wrong SensorManager instance",       context.getSystemService(Context.SENSOR_SERVICE),                 this.sensorManager);
-            Assert.assertSame("Wrong StorageManager instance",      context.getSystemService(Context.STORAGE_SERVICE),                this.storageManager);
+            Assert.assertSame("Wrong LayoutInflater instance", context.getSystemService(Context.LAYOUT_INFLATER_SERVICE), this.layoutInflater);
+            Assert.assertSame("Wrong LocationManager instance", context.getSystemService(Context.LOCATION_SERVICE), this.locationManager);
+            Assert.assertSame("Wrong MediaRouter instance", context.getSystemService(Context.MEDIA_ROUTER_SERVICE), this.mediaRouter);
+            Assert.assertSame("Wrong NotificationManager instance", context.getSystemService(Context.NOTIFICATION_SERVICE), this.notificationManager);
+            Assert.assertSame("Wrong PowerManager instance", context.getSystemService(Context.POWER_SERVICE), this.powerManager);
+            Assert.assertSame("Wrong SearchManager instance", context.getSystemService(Context.SEARCH_SERVICE), this.searchManager);
+            Assert.assertSame("Wrong SensorManager instance", context.getSystemService(Context.SENSOR_SERVICE), this.sensorManager);
+            Assert.assertSame("Wrong StorageManager instance", context.getSystemService(Context.STORAGE_SERVICE), this.storageManager);
             Assert.assertSame("Wrong SubscriptionManager instance", context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE), this.subscriptionManager);
-            Assert.assertSame("Wrong TelephonyManager instance",    context.getSystemService(Context.TELEPHONY_SERVICE),              this.telephonyManager);
-            Assert.assertSame("Wrong UiModeManager instance",       context.getSystemService(Context.UI_MODE_SERVICE),                this.uiModeManager);
-            Assert.assertSame("Wrong Vibrator instance",            context.getSystemService(Context.VIBRATOR_SERVICE),               this.vibrator);
-            Assert.assertSame("Wrong WifiManager instance",         context.getSystemService(Context.WIFI_SERVICE),                   this.wifiManager);
+            Assert.assertSame("Wrong TelephonyManager instance", context.getSystemService(Context.TELEPHONY_SERVICE), this.telephonyManager);
+            Assert.assertSame("Wrong UiModeManager instance", context.getSystemService(Context.UI_MODE_SERVICE), this.uiModeManager);
+            Assert.assertSame("Wrong Vibrator instance", context.getSystemService(Context.VIBRATOR_SERVICE), this.vibrator);
+            Assert.assertSame("Wrong WifiManager instance", context.getSystemService(Context.WIFI_SERVICE), this.wifiManager);
             //Assert.assertSame("Wrong WindowManager instance",       context.getSystemService(Context.WINDOW_SERVICE),                 this.windowManager);
         }
     }

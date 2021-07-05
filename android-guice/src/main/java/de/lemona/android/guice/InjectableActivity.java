@@ -1,10 +1,10 @@
 package de.lemona.android.guice;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.google.inject.Binder;
+import com.google.inject.Module;
 
 public abstract class InjectableActivity extends Activity {
 
@@ -17,11 +17,7 @@ public abstract class InjectableActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Injection.createInjector(this, new Module() {
-            @Override public void configure(Binder binder) {
-                onInject(binder);
-            }
-        });
+        Injection.createInjector(this, this::onInject);
     }
 
     protected void onInject(@SuppressWarnings("unused") Binder binder) {

@@ -1,9 +1,10 @@
 package de.lemona.android.guice.test;
 
+import android.content.Context;
+
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-import android.content.Context;
 import de.lemona.android.guice.AppModules;
 import de.lemona.android.guice.InjectableActivity;
 

@@ -1,10 +1,10 @@
 package de.lemona.android.guice.test;
 
+import android.content.Context;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-
-import android.content.Context;
 
 @Singleton // Run when creating the injector...
 public class AnnotatedTestActivityComponent {

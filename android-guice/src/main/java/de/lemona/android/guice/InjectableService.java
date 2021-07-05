@@ -1,9 +1,9 @@
 package de.lemona.android.guice;
 
+import android.app.Service;
+
 import com.google.inject.Binder;
 import com.google.inject.Module;
-
-import android.app.Service;
 
 public abstract class InjectableService extends Service {
 
@@ -16,11 +16,7 @@ public abstract class InjectableService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Injection.createInjector(this, new Module() {
-            @Override public void configure(Binder binder) {
-                onInject(binder);
-            }
-        });
+        Injection.createInjector(this, this::onInject);
     }
 
     public void onInject(@SuppressWarnings("unused") Binder binder) {

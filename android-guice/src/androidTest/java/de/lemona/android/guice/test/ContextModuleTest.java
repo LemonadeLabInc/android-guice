@@ -1,24 +1,35 @@
 package de.lemona.android.guice.test;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.test.AndroidTestCase;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import de.lemona.android.guice.AppContext;
 import de.lemona.android.guice.Injection;
-import junit.framework.Assert;
 
-public class ContextModuleTest extends AndroidTestCase {
 
+@RunWith(AndroidJUnit4.class)
+public class ContextModuleTest  {
+
+    @Test
     public void testNotNullInjection() {
-        final Context context = getContext();
+        final Context context = InstrumentationRegistry.getInstrumentation().getContext();
         final Context applicationContext = context.getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
         Assert.assertNotNull("Null applicationContext in test", applicationContext);
@@ -36,8 +47,9 @@ public class ContextModuleTest extends AndroidTestCase {
         Assert.assertNotNull("Null Resources instance", injector.getInstance(Resources.class));
     }
 
+    @Test
     public void testInjectionInstances() {
-        final Context context = getContext();
+        final Context context = InstrumentationRegistry.getInstrumentation().getContext();
         final Context applicationContext = context.getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
         Assert.assertNotNull("Null applicationContext in test", applicationContext);
@@ -55,8 +67,9 @@ public class ContextModuleTest extends AndroidTestCase {
         Assert.assertSame("Wrong Resources instance", context.getResources(), injector.getInstance(Resources.class));
     }
 
+    @Test
     public void testInjectee() {
-        final Context context = getContext();
+        final Context context = ApplicationProvider.getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Injection.createInjector(context);
@@ -64,7 +77,7 @@ public class ContextModuleTest extends AndroidTestCase {
     }
 
     public void testInjection() {
-        final Context context = getContext();
+        final Context context = ApplicationProvider.getApplicationContext();
         Assert.assertNotNull("Null context in test", context);
 
         Injection.createInjector(context).getInstance(ContextInjectee.class).validate(context);

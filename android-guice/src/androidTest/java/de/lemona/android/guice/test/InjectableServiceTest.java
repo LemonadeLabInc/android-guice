@@ -1,23 +1,28 @@
 package de.lemona.android.guice.test;
 
 import android.content.Intent;
-import android.test.ServiceTestCase;
-import junit.framework.Assert;
+import android.os.IBinder;
 
-public class InjectableServiceTest extends ServiceTestCase<TestInjectableService> {
+import androidx.test.rule.ServiceTestRule;
 
-    public InjectableServiceTest() {
-        super(TestInjectableService.class);
-    }
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        this.bindService(new Intent(getSystemContext(), TestService.class));
-    }
+import java.util.concurrent.TimeoutException;
 
-    public void testInjectee() {
-        final TestInjectableService service = getService();
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
+public class InjectableServiceTest {
+
+    @Rule
+    public ServiceTestRule serviceServiceTestRule = new ServiceTestRule();
+
+    @Test
+    public void testInjectee() throws TimeoutException {
+        Intent testIntent = new Intent(getApplicationContext(), TestInjectableService.class);
+        IBinder iBinder = serviceServiceTestRule.bindService(testIntent);
+        final TestInjectableService service = (TestInjectableService) ((TestInjectableService.LocalBinder) iBinder).getService();
         Assert.assertNotNull("Null Service in test", service);
         service.validate();
     }

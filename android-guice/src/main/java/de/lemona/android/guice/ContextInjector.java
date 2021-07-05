@@ -1,9 +1,6 @@
 package de.lemona.android.guice;
 
-import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import android.content.Context;
 
 import com.google.inject.Binding;
 import com.google.inject.Injector;
@@ -15,7 +12,10 @@ import com.google.inject.Scope;
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverterBinding;
 
-import android.content.Context;
+import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ContextInjector implements Injector {
 
@@ -45,22 +45,22 @@ public class ContextInjector implements Injector {
 
     @Override
     public <T> MembersInjector<T> getMembersInjector(TypeLiteral<T> typeLiteral) {
-        return new ContextMembersInjector<T>(injector.getMembersInjector(typeLiteral));
+        return new ContextMembersInjector<>(injector.getMembersInjector(typeLiteral));
     }
 
     @Override
     public <T> MembersInjector<T> getMembersInjector(Class<T> type) {
-        return new ContextMembersInjector<T>(injector.getMembersInjector(type));
+        return new ContextMembersInjector<>(injector.getMembersInjector(type));
     }
 
     @Override
     public <T> Provider<T> getProvider(Key<T> key) {
-        return new ContextProvider<T>(injector.getProvider(key));
+        return new ContextProvider<>(injector.getProvider(key));
     }
 
     @Override
     public <T> Provider<T> getProvider(Class<T> type) {
-        return new ContextProvider<T>(injector.getProvider(type));
+        return new ContextProvider<>(injector.getProvider(type));
     }
 
     @Override
