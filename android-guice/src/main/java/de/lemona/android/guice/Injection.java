@@ -10,7 +10,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.ProvisionException;
-import com.google.inject.internal.util.$FinalizableReferenceQueue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,16 +38,9 @@ public final class Injection {
 
     // Filter annoying log for which we can do nothing about...
     private static boolean initialized = false;
-    static final void init() {
+    static void init() {
         if (initialized) return;
         initialized = true;
-
-        Logger.getLogger($FinalizableReferenceQueue.class.getName()).setFilter(new Filter() {
-            @Override public boolean isLoggable(LogRecord record) {
-                if (record.getMessage().startsWith("Could not load Finalizer")) return false;
-                return true;
-            }
-        });
     }
 
     static { Injection.init(); }
